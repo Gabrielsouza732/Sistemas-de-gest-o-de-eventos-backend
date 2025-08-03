@@ -24,6 +24,12 @@ const getAllEvents = async (filters) => {
   return await prisma.event.findMany({
     where,
     orderBy: { createdAt: "desc" },
+    // Se você precisar incluir dados relacionados (como checklistItems ou comments),
+    // o 'include' deve ser um argumento de nível superior, assim:
+    // include: {
+    //   checklistItems: true,
+    //   comments: true,
+    // },
   });
 };
 
