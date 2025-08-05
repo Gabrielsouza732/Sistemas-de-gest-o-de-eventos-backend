@@ -6,7 +6,7 @@ const NotificationService = require("../services/notification.service");
 const getChecklistByEvent = async (req, res) => {
   try {
     const { eventId } = req.params;
-    const checklist = await ChecklistService.getChecklistByEvent(eventId);
+    const checklist = await ChecklistService.getChecklistItemsByEvent(eventId);
     res.status(200).json(checklist);
   } catch (error) {
     console.error("Erro ao buscar checklist:", error);
