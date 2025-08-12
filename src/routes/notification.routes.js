@@ -24,4 +24,19 @@ router.post("/check-deadlines", async (req, res) => {
   }
 });
 
+// NOVA ROTA: enviar email ao atribuir responsável a um item do checklist
+router.post("/assignment", async (req, res) => {
+  try {
+    const { checklistItemId } = req.body;
+    if (!checklistItemId) {
+      return res.status(400).json({ error: "checklistItemId é obrigatório." });
+    }
+    await NotificationService.sendTaskAssignmentNotification(checklistItemId);
+    res.status(200).json({ message: "Notificação de atribuição disparada." });
+  } catch (error) {
+    console.error("Erro ao enviar notificação de atribuição:", error);
+    res.status(500).json({ error: "Erro ao enviar notificação de atribuição." });
+  }
+});
+
 module.exports = router;

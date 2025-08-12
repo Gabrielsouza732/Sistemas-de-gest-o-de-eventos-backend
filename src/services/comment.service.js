@@ -22,11 +22,21 @@ const createComment = async (commentData) => {
     data: {
       text: commentData.text,
       eventId: commentData.eventId,
-      author: commentData.author || 'Usuário Anônimo',
+      author: commentData.author || "Usuário Anônimo",
       authorId: commentData.authorId || null,
-    }
+    },
+    include: {
+      authorUser: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+        },
+      },
+    },
   });
 };
+
 
 const updateComment = async (id, commentData) => {
   return await prisma.comment.update({
